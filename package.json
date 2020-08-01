@@ -25,7 +25,11 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose -p service-kiosk up",
+    "docker:up:bg": "docker-compose -p service-kiosk up -d",
+    "docker:up:build": "docker-compose up --build -V"
   },
   "dependencies": {
     "@nestjs/common": "^7.4.2",
