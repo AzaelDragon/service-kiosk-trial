@@ -1,0 +1,10 @@
+{
+  "name": "service-kiosk-trial",
+  "version": "0.0.1",
+  "description": "A simple service order ticketing API powered by NestJS and GraphQL. Built as a coding trial for Imaginamos S.A.S.",
+  "main": "dist/main.js",
+  "repository": "git@github.com:AzaelDragon/service-kiosk-trial.git",
+  "author": "David S. García (Azæl) <azael@dragonspark.tech>",
+  "license": "MIT",
+  "private": true
+}
