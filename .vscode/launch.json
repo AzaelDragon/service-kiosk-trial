@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug: Service Kiosk",
+        "type": "node",
+        "request": "attach",
+        "remoteRoot": "/apps/service-kiosk",
+        "localRoot": "${workspaceFolder}",
+        "protocol": "inspector",
+        "port": 9229,
+        "restart": true,
+        "address": "0.0.0.0",
+        "skipFiles": [
+          "<node_internals>/**"
+        ]
+      },
+      {
+        "name": "Launch: Service Kiosk",
+        "type": "docker",
+        "request": "launch",
+        "preLaunchTask": "docker-run: debug",
+        "platform": "node"
+      }
+    ]
+   }

@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+    main:
+        container_name: 'service-kiosk'
+        build:
+          context: .
+          target: builder
+        volumes:
+          - .:/apps/service-kiosk
+          - /apps/service-kiosk/node_modules
+        ports:
+          - ${PORT}:${PORT}
+          - 9229:9229
+        command: yarn start:debug
+        env_file:
+          - .env
