@@ -1,0 +1,44 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  document: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  role: String!
+  clientTickets: [Ticket!]
+  technicianTickets: [Ticket!]
+}
+
+type Ticket {
+  id: String!
+  date: Date!
+  updatedAt: Date!
+  client: User!
+  technician: User!
+  rating: Int
+  ratingExtra: String
+  status: String!
+  type: String!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type Query {
+  ticket: Ticket!
+  clientTickets: [Ticket!]!
+  technicianTickets: [Ticket!]!
+}
+
+type Mutation {
+  createTicket(createTicketData: CreateTicketInput!): Ticket!
+}
+
+input CreateTicketInput {
+  client: Int!
+  type: String!
+}
