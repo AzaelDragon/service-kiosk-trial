@@ -3,19 +3,26 @@
   "steps": [
     {
       "tag": "CreateEnum",
-      "enum": "OrderType",
+      "enum": "UserRole",
       "values": [
-        "MANTEINANCE",
+        "CLIENT",
+        "TECHNICIAN"
+      ]
+    },
+    {
+      "tag": "CreateEnum",
+      "enum": "TicketType",
+      "values": [
+        "MAINTENANCE",
         "INSTALLATION",
         "WARRANTY"
       ]
     },
     {
       "tag": "CreateEnum",
-      "enum": "OrderStatus",
+      "enum": "TicketStatus",
       "values": [
-        "CREATED",
-        "ASSIGNATED",
+        "ASSIGNED",
         "IN_PROGRESS",
         "FINISHED"
       ]
@@ -44,13 +51,13 @@
     },
     {
       "tag": "CreateModel",
-      "model": "Client"
+      "model": "User"
     },
     {
       "tag": "CreateField",
-      "model": "Client",
+      "model": "User",
       "field": "id",
-      "type": "String",
+      "type": "Int",
       "arity": "Required"
     },
     {
@@ -58,7 +65,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Client",
+          "model": "User",
           "field": "id"
         },
         "directive": "id"
@@ -69,7 +76,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Client",
+          "model": "User",
           "field": "id"
         },
         "directive": "default"
@@ -81,38 +88,38 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Client",
+          "model": "User",
           "field": "id"
         },
         "directive": "default"
       },
       "argument": "",
-      "value": "cuid()"
+      "value": "autoincrement()"
     },
     {
       "tag": "CreateField",
-      "model": "Client",
+      "model": "User",
       "field": "document",
       "type": "Int",
       "arity": "Required"
     },
     {
       "tag": "CreateField",
-      "model": "Client",
-      "field": "name",
+      "model": "User",
+      "field": "firstName",
       "type": "String",
       "arity": "Required"
     },
     {
       "tag": "CreateField",
-      "model": "Client",
+      "model": "User",
       "field": "lastName",
       "type": "String",
       "arity": "Required"
     },
     {
       "tag": "CreateField",
-      "model": "Client",
+      "model": "User",
       "field": "email",
       "type": "String",
       "arity": "Required"
@@ -122,7 +129,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Client",
+          "model": "User",
           "field": "email"
         },
         "directive": "unique"
@@ -130,25 +137,89 @@
     },
     {
       "tag": "CreateField",
-      "model": "Client",
+      "model": "User",
       "field": "password",
       "type": "String",
       "arity": "Required"
     },
     {
       "tag": "CreateField",
-      "model": "Client",
-      "field": "placedOrders",
-      "type": "Order",
+      "model": "User",
+      "field": "clientTickets",
+      "type": "Ticket",
       "arity": "List"
     },
     {
-      "tag": "CreateModel",
-      "model": "Technician"
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "clientTickets"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "clientTickets"
+        },
+        "directive": "relation"
+      },
+      "argument": "name",
+      "value": "\"TicketClient\""
     },
     {
       "tag": "CreateField",
-      "model": "Technician",
+      "model": "User",
+      "field": "technicianTickets",
+      "type": "Ticket",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "technicianTickets"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "technicianTickets"
+        },
+        "directive": "relation"
+      },
+      "argument": "name",
+      "value": "\"TicketTechnician\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "role",
+      "type": "UserRole",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateModel",
+      "model": "Ticket"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Ticket",
       "field": "id",
       "type": "String",
       "arity": "Required"
@@ -158,7 +229,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Technician",
+          "model": "Ticket",
           "field": "id"
         },
         "directive": "id"
@@ -169,7 +240,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Technician",
+          "model": "Ticket",
           "field": "id"
         },
         "directive": "default"
@@ -181,7 +252,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Technician",
+          "model": "Ticket",
           "field": "id"
         },
         "directive": "default"
@@ -191,114 +262,14 @@
     },
     {
       "tag": "CreateField",
-      "model": "Technician",
-      "field": "document",
-      "type": "Int",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Technician",
-      "field": "name",
-      "type": "String",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Technician",
-      "field": "lastName",
-      "type": "String",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Technician",
-      "field": "email",
-      "type": "String",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Technician",
-          "field": "email"
-        },
-        "directive": "unique"
-      }
-    },
-    {
-      "tag": "CreateField",
-      "model": "Technician",
-      "field": "password",
-      "type": "String",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Technician",
-      "field": "assignedOrders",
-      "type": "Order",
-      "arity": "List"
-    },
-    {
-      "tag": "CreateModel",
-      "model": "Order"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Order",
-      "field": "id",
-      "type": "String",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Order",
-          "field": "id"
-        },
-        "directive": "id"
-      }
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Order",
-          "field": "id"
-        },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Order",
-          "field": "id"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "cuid()"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Order",
+      "model": "Ticket",
       "field": "date",
       "type": "DateTime",
       "arity": "Required"
     },
     {
       "tag": "CreateField",
-      "model": "Order",
+      "model": "Ticket",
       "field": "updatedAt",
       "type": "DateTime",
       "arity": "Required"
@@ -308,7 +279,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Order",
+          "model": "Ticket",
           "field": "updatedAt"
         },
         "directive": "updatedAt"
@@ -316,16 +287,23 @@
     },
     {
       "tag": "CreateField",
-      "model": "Order",
+      "model": "Ticket",
       "field": "clientId",
-      "type": "String",
+      "type": "Int",
       "arity": "Required"
     },
     {
       "tag": "CreateField",
-      "model": "Order",
+      "model": "Ticket",
+      "field": "technicianId",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Ticket",
       "field": "client",
-      "type": "Client",
+      "type": "User",
       "arity": "Required"
     },
     {
@@ -333,7 +311,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Order",
+          "model": "Ticket",
           "field": "client"
         },
         "directive": "relation"
@@ -345,7 +323,21 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Order",
+          "model": "Ticket",
+          "field": "client"
+        },
+        "directive": "relation"
+      },
+      "argument": "name",
+      "value": "\"TicketClient\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Ticket",
           "field": "client"
         },
         "directive": "relation"
@@ -359,7 +351,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Order",
+          "model": "Ticket",
           "field": "client"
         },
         "directive": "relation"
@@ -369,16 +361,9 @@
     },
     {
       "tag": "CreateField",
-      "model": "Order",
-      "field": "technicianId",
-      "type": "String",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Order",
+      "model": "Ticket",
       "field": "technician",
-      "type": "Technician",
+      "type": "User",
       "arity": "Required"
     },
     {
@@ -386,7 +371,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Order",
+          "model": "Ticket",
           "field": "technician"
         },
         "directive": "relation"
@@ -398,7 +383,21 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Order",
+          "model": "Ticket",
+          "field": "technician"
+        },
+        "directive": "relation"
+      },
+      "argument": "name",
+      "value": "\"TicketTechnician\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Ticket",
           "field": "technician"
         },
         "directive": "relation"
@@ -412,7 +411,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Order",
+          "model": "Ticket",
           "field": "technician"
         },
         "directive": "relation"
@@ -422,30 +421,30 @@
     },
     {
       "tag": "CreateField",
-      "model": "Order",
+      "model": "Ticket",
       "field": "rating",
       "type": "Int",
       "arity": "Optional"
     },
     {
       "tag": "CreateField",
-      "model": "Order",
+      "model": "Ticket",
       "field": "ratingExtra",
       "type": "String",
       "arity": "Optional"
     },
     {
       "tag": "CreateField",
-      "model": "Order",
+      "model": "Ticket",
       "field": "status",
-      "type": "OrderStatus",
+      "type": "TicketStatus",
       "arity": "Required"
     },
     {
       "tag": "CreateField",
-      "model": "Order",
+      "model": "Ticket",
       "field": "type",
-      "type": "OrderType",
+      "type": "TicketType",
       "arity": "Required"
     }
   ]
