@@ -35,10 +35,10 @@ export class Ticket {
   @Field()
   updatedAt: Date;
 
-  @Field()
+  @Field((type) => User)
   client: User;
 
-  @Field()
+  @Field((type) => User)
   technician: User;
 
   @Field((type) => Int, { nullable: true })
