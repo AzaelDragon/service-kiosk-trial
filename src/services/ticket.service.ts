@@ -19,16 +19,12 @@ export class TicketService {
     return this.prisma.ticket.findOne({ where: { id: payload.ticketId } });
   }
 
-  async findClientTickets(payload: UserIdArgs) {
-    return this.prisma.user
-      .findOne({ where: { id: payload.userId } })
-      .clientTickets();
+  async findClientTickets(id: number) {
+    return this.prisma.user.findOne({ where: { id: id } }).clientTickets();
   }
 
-  async findTechnicianTickets(payload: UserIdArgs) {
-    return this.prisma.user
-      .findOne({ where: { id: payload.userId } })
-      .technicianTickets();
+  async findTechnicianTickets(id: number) {
+    return this.prisma.user.findOne({ where: { id: id } }).technicianTickets();
   }
 
   async createTicket(payload: CreateTicketInput) {
