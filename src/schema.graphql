@@ -42,6 +42,8 @@ type Query {
   ticket(ticketId: String!): Ticket!
   clientTickets(userId: Int!): [Ticket!]!
   technicianTickets(userId: Int!): [Ticket!]!
+  createdTickets: [Ticket!]!
+  assignedTickets: [Ticket!]!
 }
 
 type Mutation {
