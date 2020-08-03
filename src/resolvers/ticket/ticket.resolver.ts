@@ -20,6 +20,11 @@ export class TicketResolver {
     private ticketService: TicketService,
   ) {}
 
+  @Query((returns) => [Ticket])
+  async tickets() {
+    return this.ticketService.findAllTickets();
+  }
+
   @Query((returns) => Ticket)
   async ticket(@Args() id: TicketIdArgs) {
     return this.ticketService.findTicket(id);
@@ -36,9 +41,19 @@ export class TicketResolver {
   }
 
   @Mutation((returns) => Ticket)
-  async createTicket(
-    @Args('createTicketData') createTicketData: CreateTicketInput,
-  ) {
-    return this.ticketService.createTicket(createTicketData);
+  async createTicket(@Args('createTicketData') data: CreateTicketInput) {
+    return this.ticketService.createTicket(data);
+  }
+
+  @ResolveField()
+  async client(@Parent() ticket: Ticket) {
+    const ovo = this.ticketService.getClientFromTicket(ticket);
+    console.log(ovo);
+    return ovo;
+  }
+
+  @ResolveField()
+  async technician(@Parent() ticket: Ticket) {
+    return this.ticketService.getTechnicianFromTicket(ticket);
   }
 }
