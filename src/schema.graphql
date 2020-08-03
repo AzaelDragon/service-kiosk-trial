@@ -28,7 +28,17 @@ type Ticket {
 """Date custom scalar type"""
 scalar Date
 
+type Auth {
+  """JWT access token"""
+  accessToken: String!
+
+  """JWT refresh token"""
+  refreshToken: String!
+  user: User!
+}
+
 type Query {
+  tickets: [Ticket!]!
   ticket: Ticket!
   clientTickets: [Ticket!]!
   technicianTickets: [Ticket!]!
@@ -36,9 +46,25 @@ type Query {
 
 type Mutation {
   createTicket(createTicketData: CreateTicketInput!): Ticket!
+  clientSignup(data: SignupInput!): Auth!
+  technicianSignup(data: SignupInput!): Auth!
+  login(data: LoginInput!): Auth!
 }
 
 input CreateTicketInput {
   client: Int!
   type: String!
+}
+
+input SignupInput {
+  document: Int!
+  firstName: String
+  lastName: String
+  email: String!
+  password: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }
