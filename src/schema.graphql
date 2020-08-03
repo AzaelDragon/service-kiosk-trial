@@ -41,17 +41,24 @@ type Query {
   tickets: [Ticket!]!
   ticket(ticketId: String!): Ticket!
   clientTickets(userId: Int!): [Ticket!]!
-  technicianTickets(userId: Int!): [Ticket!]!
   createdTickets: [Ticket!]!
+  technicianTickets(userId: Int!): [Ticket!]!
   assignedTickets: [Ticket!]!
 }
 
 type Mutation {
+  rateTicket(data: RateTicketInput!): Ticket!
   createTicket(data: CreateTicketInput!): Ticket!
   requestTicket(data: RequestTicketInput!): Ticket!
   signup(data: SignupInput!): Auth!
   technicianSignup(data: SignupInput!): Auth!
   login(data: LoginInput!): Auth!
+}
+
+input RateTicketInput {
+  ticketId: String!
+  rating: Int!
+  ratingExtra: String
 }
 
 input CreateTicketInput {
