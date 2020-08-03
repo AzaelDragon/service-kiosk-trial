@@ -5,7 +5,8 @@ import { ConfigService } from '@nestjs/config';
 import { AuthService } from 'src/services/auth.service';
 import { AuthResolver } from './auth.resolver';
 import { JwtStrategy } from './jwt.strategy';
-import { ApiAuthGuard } from 'src/guards/api-auth-guard';
+import { ApiAuthGuard } from 'src/guards/api-auth.guard';
+import { RoleGuard } from 'src/guards/role.guard';
 import { PasswordService } from 'src/services/password.service';
 import { PrismaService } from 'src/services/prisma.service';
 
@@ -27,6 +28,7 @@ import { PrismaService } from 'src/services/prisma.service';
     AuthResolver,
     JwtStrategy,
     ApiAuthGuard,
+    RoleGuard,
     PasswordService,
     PrismaService,
   ],
