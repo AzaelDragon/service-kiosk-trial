@@ -69,8 +69,8 @@ async function main() {
 
   const ticket1 = await prisma.ticket.create({
     data: {
-      date: new Date(Date.now()),
-      updatedAt: new Date(Date.now()),
+      date: new Date(Date.now()).toISOString(),
+      updatedAt: new Date(Date.now()).toISOString(),
       client: {
         connect: {
           id: 4,
@@ -88,8 +88,8 @@ async function main() {
 
   const ticket2 = await prisma.ticket.create({
     data: {
-      date: new Date(Date.now()),
-      updatedAt: new Date(Date.now()),
+      date: new Date(Date.now()).toISOString(),
+      updatedAt: new Date(Date.now()).toISOString(),
       client: {
         connect: {
           id: 5,
