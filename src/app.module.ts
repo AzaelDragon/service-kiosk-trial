@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TicketModule } from './resolvers/ticket/ticket.module';
 import { DateScalar } from './common/scalars/date.scalar';
+import { AuthModule } from './resolvers/auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { DateScalar } from './common/scalars/date.scalar';
       }),
       inject: [ConfigService],
     }),
+    AuthModule,
     TicketModule,
   ],
   controllers: [],
