@@ -6,6 +6,9 @@ import { TicketIdArgs } from 'src/models/args/ticket-id.args';
 import { Ticket } from 'src/models/ticket.model';
 import { RateTicketInput } from 'src/models/inputs/rate-ticket.input';
 import { User } from 'src/models/user.model';
+import { contains } from 'class-validator';
+import { start } from 'repl';
+import { NestApplication } from '@nestjs/core';
 
 @Injectable()
 export class TicketService {
@@ -27,6 +30,24 @@ export class TicketService {
     return this.prisma.user.findOne({ where: { id: id } }).technicianTickets();
   }
 
+  async findWorkList(technicianId: number, date: Date) {
+    const baseDate = date.toISOString().substr(0, 10);
+    const startDate = new Date(`${baseDate}T00:00:00.000Z`);
+    const endDate = new Date(`${baseDate}T23:59:59.999Z`);
+    return this.prisma.user
+      .findOne({
+        where: { id: technicianId },
+      })
+      .technicianTickets({
+        where: {
+          date: {
+            gte: startDate,
+            lt: endDate,
+          },
+        },
+      });
+  }
+
   async createTicket(payload: CreateTicketInput) {
     const availableTechnicians = await this.prisma.user.findMany({
       where: { role: 'TECHNICIAN' },
@@ -37,8 +58,8 @@ export class TicketService {
       ];
 
     const queryData = {
-      date: new Date(Date.now()),
-      updatedAt: new Date(Date.now()),
+      date: new Date(Date.now()).toISOString(),
+      updatedAt: new Date(Date.now()).toISOString(),
       client: {
         connect: {
           id: payload.client,
@@ -53,7 +74,7 @@ export class TicketService {
       type: payload.type,
     };
 
-    return this.prisma.ticket.create({ data: queryData });
+    return await this.prisma.ticket.create({ data: queryData });
   }
 
   async getClientFromTicket(ticket: Ticket) {
@@ -66,20 +87,32 @@ export class TicketService {
       .technician();
   }
 
-  async rateTicket(user: User, payload: RateTicketInput) {
-    if (user.role !== UserRole.ADMIN) {
-      const targetTicket = await this.prisma.ticket.findOne({
-        where: { id: payload.ticketId },
-      });
-      if (user.id != targetTicket.clientId) {
-        throw new HttpException(
-          {
-            status: HttpStatus.FORBIDDEN,
-            error:
-              "You can only rate a service ticket you've created yourself.",
-          },
-          HttpStatus.FORBIDDEN,
-        );
+  async rateTicket(payload: RateTicketInput, user?: User) {
+    if (payload.rating < 0 || payload.rating > 5) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'A post can only be rated in a scale of 0 to 5',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    if (user) {
+      if (user.role !== UserRole.ADMIN) {
+        const targetTicket = await this.prisma.ticket.findOne({
+          where: { id: payload.ticketId },
+        });
+        if (user.id != targetTicket.clientId) {
+          throw new HttpException(
+            {
+              status: HttpStatus.FORBIDDEN,
+              error:
+                "You can only rate a service ticket you've created yourself.",
+            },
+            HttpStatus.FORBIDDEN,
+          );
+        }
       }
     }
 

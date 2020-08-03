@@ -23,6 +23,8 @@ type Ticket {
   ratingExtra: String
   status: String!
   type: String!
+  trackURL: String!
+  rateURL: String!
 }
 
 """Date custom scalar type"""
