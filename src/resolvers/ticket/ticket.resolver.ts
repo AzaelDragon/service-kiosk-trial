@@ -7,26 +7,23 @@ import {
   Mutation,
 } from '@nestjs/graphql';
 import { Ticket } from '../../models/ticket.model';
-import { TicketIdArgs } from 'src/models/args/ticket-id.args';
-import { CreateTicketInput } from 'src/models/inputs/create-ticket.input';
-import { TicketService } from 'src/services/ticket.service';
-import { PrismaService } from 'src/services/prisma.service';
-import { UserIdArgs } from 'src/models/args/user-id.args';
+import { TicketIdArgs } from '../../models/args/ticket-id.args';
+import { CreateTicketInput } from '../../models/inputs/create-ticket.input';
+import { TicketService } from '../../services/ticket.service';
+import { PrismaService } from '../../services/prisma.service';
+import { UserIdArgs } from '../../models/args/user-id.args';
 import { UseGuards } from '@nestjs/common';
-import { ApiAuthGuard } from 'src/guards/api-auth.guard';
-import { RoleGuard } from 'src/guards/role.guard';
-import { Roles } from 'src/decorators/roles.decorator';
-import { CurrentUser } from 'src/decorators/current-user.decorator';
-import { User } from 'src/models/user.model';
-import { RequestTicketInput } from 'src/models/inputs/request-ticket.input';
-import { RateTicketInput } from 'src/models/inputs/rate-ticket.input';
+import { ApiAuthGuard } from '../../guards/api-auth.guard';
+import { RoleGuard } from '../../guards/role.guard';
+import { Roles } from '../../decorators/roles.decorator';
+import { CurrentUser } from '../../decorators/current-user.decorator';
+import { User } from '../../models/user.model';
+import { RequestTicketInput } from '../../models/inputs/request-ticket.input';
+import { RateTicketInput } from '../../models/inputs/rate-ticket.input';
 
 @Resolver((of) => Ticket)
 export class TicketResolver {
-  constructor(
-    private prisma: PrismaService,
-    private ticketService: TicketService,
-  ) {}
+  constructor(private ticketService: TicketService) {}
 
   @UseGuards(ApiAuthGuard, RoleGuard)
   @Roles('ADMIN')

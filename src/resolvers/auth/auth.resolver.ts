@@ -5,15 +5,15 @@ import {
   ResolveField,
   Parent,
 } from '@nestjs/graphql';
-import { Auth } from 'src/models/auth.model';
-import { AuthService } from 'src/services/auth.service';
-import { SignupInput } from 'src/models/inputs/signup.input';
+import { Auth } from '../../models/auth.model';
+import { AuthService } from '../../services/auth.service';
+import { SignupInput } from '../../models/inputs/signup.input';
 import { UserRole, User } from '@prisma/client';
-import { LoginInput } from 'src/models/inputs/login.input';
+import { LoginInput } from '../../models/inputs/login.input';
 import { UseGuards } from '@nestjs/common';
-import { ApiAuthGuard } from 'src/guards/api-auth.guard';
-import { RoleGuard } from 'src/guards/role.guard';
-import { Roles } from 'src/decorators/roles.decorator';
+import { ApiAuthGuard } from '../../guards/api-auth.guard';
+import { RoleGuard } from '../../guards/role.guard';
+import { Roles } from '../../decorators/roles.decorator';
 
 @Resolver((of) => Auth)
 export class AuthResolver {
