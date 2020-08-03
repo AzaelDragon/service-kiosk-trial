@@ -47,7 +47,8 @@ type Query {
 }
 
 type Mutation {
-  createTicket(createTicketData: CreateTicketInput!): Ticket!
+  createTicket(data: CreateTicketInput!): Ticket!
+  requestTicket(data: RequestTicketInput!): Ticket!
   clientSignup(data: SignupInput!): Auth!
   technicianSignup(data: SignupInput!): Auth!
   login(data: LoginInput!): Auth!
@@ -55,6 +56,10 @@ type Mutation {
 
 input CreateTicketInput {
   client: Int!
+  type: String!
+}
+
+input RequestTicketInput {
   type: String!
 }
 
