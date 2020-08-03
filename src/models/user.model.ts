@@ -8,6 +8,7 @@ import {
 import { Ticket } from './ticket.model';
 
 export enum UserRole {
+  ADMIN = 'ADMIN',
   CLIENT = 'CLIENT',
   TECHNICIAN = 'TECHNICIAN',
 }

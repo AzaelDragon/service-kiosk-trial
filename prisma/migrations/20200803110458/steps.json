@@ -5,6 +5,7 @@
       "tag": "CreateEnum",
       "enum": "UserRole",
       "values": [
+        "ADMIN",
         "CLIENT",
         "TECHNICIAN"
       ]
