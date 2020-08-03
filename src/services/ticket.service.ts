@@ -3,8 +3,6 @@ import { PrismaService } from './prisma.service';
 import { CreateTicketInput } from 'src/models/inputs/create-ticket.input';
 import { TicketStatus, UserRole } from '@prisma/client';
 import { TicketIdArgs } from 'src/models/args/ticket-id.args';
-import { UserIdArgs } from 'src/models/args/user-id.args';
-import { Args } from '@nestjs/graphql';
 import { Ticket } from 'src/models/ticket.model';
 
 @Injectable()
@@ -28,13 +26,14 @@ export class TicketService {
   }
 
   async createTicket(payload: CreateTicketInput) {
-    const availableTechnicians = await this.prisma.user.count({
-      where: { role: UserRole.TECHNICIAN },
+    const availableTechnicians = await this.prisma.user.findMany({
+      where: { role: 'TECHNICIAN' },
     });
-
-    const technician = await this.prisma.user.findOne({
-      where: { id: Math.floor(Math.random() * availableTechnicians + 1) },
-    });
+    console.log(availableTechnicians);
+    const technician =
+      availableTechnicians[
+        Math.floor(Math.random() * availableTechnicians.length)
+      ];
 
     const queryData = {
       date: new Date(Date.now()),
