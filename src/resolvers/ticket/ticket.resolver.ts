@@ -22,38 +22,38 @@ export class TicketResolver {
 
   @Query((returns) => [Ticket])
   async tickets() {
-    return this.ticketService.findAllTickets();
+    return await this.ticketService.findAllTickets();
   }
 
   @Query((returns) => Ticket)
-  async ticket(@Args() id: TicketIdArgs) {
-    return this.ticketService.findTicket(id);
+  async ticket(@Args() args: TicketIdArgs) {
+    return await this.ticketService.findTicket(args);
   }
 
   @Query((returns) => [Ticket])
-  async clientTickets(@Args() id: UserIdArgs) {
-    return this.ticketService.findClientTickets(id);
+  async clientTickets(@Args() args: UserIdArgs) {
+    const test = await this.ticketService.findClientTickets(args);
+    console.log(test);
+    return test;
   }
 
   @Query((returns) => [Ticket])
-  async technicianTickets(@Args() id: UserIdArgs) {
-    return this.ticketService.findTechnicianTickets(id);
+  async technicianTickets(@Args() args: UserIdArgs) {
+    return await this.ticketService.findTechnicianTickets(args);
   }
 
   @Mutation((returns) => Ticket)
   async createTicket(@Args('createTicketData') data: CreateTicketInput) {
-    return this.ticketService.createTicket(data);
+    return await this.ticketService.createTicket(data);
   }
 
   @ResolveField()
   async client(@Parent() ticket: Ticket) {
-    const ovo = this.ticketService.getClientFromTicket(ticket);
-    console.log(ovo);
-    return ovo;
+    return await this.ticketService.getClientFromTicket(ticket);
   }
 
   @ResolveField()
   async technician(@Parent() ticket: Ticket) {
-    return this.ticketService.getTechnicianFromTicket(ticket);
+    return await this.ticketService.getTechnicianFromTicket(ticket);
   }
 }

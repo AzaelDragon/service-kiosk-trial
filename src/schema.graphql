@@ -39,9 +39,9 @@ type Auth {
 
 type Query {
   tickets: [Ticket!]!
-  ticket: Ticket!
-  clientTickets: [Ticket!]!
-  technicianTickets: [Ticket!]!
+  ticket(ticketId: String!): Ticket!
+  clientTickets(userId: Int!): [Ticket!]!
+  technicianTickets(userId: Int!): [Ticket!]!
 }
 
 type Mutation {
