@@ -3,8 +3,8 @@ FROM node:12.18.3-alpine AS builder
 WORKDIR /apps/service-kiosk
 COPY package.json yarn.lock ./
 
-RUN yarn install --frozen-lockfile
 COPY . .
+RUN apk add --no-cache make gcc g++ python && yarn install --frozen-lockfile && npm_config_build_from_source=true yarn add bcrypt && apk del make gcc g++ python
 RUN yarn build
 
 # Production stage, uses optimized image and pruned node_modules
