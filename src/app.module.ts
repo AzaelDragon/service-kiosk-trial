@@ -4,6 +4,10 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TicketModule } from './resolvers/ticket/ticket.module';
 import { DateScalar } from './common/scalars/date.scalar';
 import { AuthModule } from './resolvers/auth/auth.module';
+import { TicketController } from './controllers/ticket.controller';
+import { TicketService } from './services/ticket.service';
+import { PrismaService } from './services/prisma.service';
+import { UserService } from './services/user.service';
 
 @Module({
   imports: [
@@ -22,7 +26,7 @@ import { AuthModule } from './resolvers/auth/auth.module';
     AuthModule,
     TicketModule,
   ],
-  controllers: [],
-  providers: [DateScalar],
+  controllers: [TicketController],
+  providers: [DateScalar, UserService, TicketService, PrismaService],
 })
 export class AppModule {}
