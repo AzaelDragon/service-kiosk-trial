@@ -18,6 +18,7 @@ import { RoleGuard } from 'src/guards/role.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { User } from 'src/models/user.model';
+import { RequestTicketInput } from 'src/models/inputs/request-ticket.input';
 
 @Resolver((of) => Ticket)
 export class TicketResolver {
@@ -59,8 +60,21 @@ export class TicketResolver {
   @UseGuards(ApiAuthGuard, RoleGuard)
   @Roles('ADMIN')
   @Mutation((returns) => Ticket)
-  async createTicket(@Args('createTicketData') data: CreateTicketInput) {
+  async createTicket(@Args('data') data: CreateTicketInput) {
     return await this.ticketService.createTicket(data);
+  }
+
+  @UseGuards(ApiAuthGuard, RoleGuard)
+  @Roles('ADMIN', 'TECHNICIAN', 'CLIENT')
+  @Mutation((returns) => Ticket)
+  async requestTicket(
+    @CurrentUser() user: User,
+    @Args('data') data: RequestTicketInput,
+  ) {
+    return await this.ticketService.createTicket({
+      ...data,
+      client: user.id,
+    });
   }
 
   @UseGuards(ApiAuthGuard, RoleGuard)
