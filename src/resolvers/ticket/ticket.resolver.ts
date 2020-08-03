@@ -35,8 +35,7 @@ export class TicketResolver {
     return await this.ticketService.findAllTickets();
   }
 
-  @UseGuards(ApiAuthGuard, RoleGuard)
-  @Roles('ADMIN')
+  @UseGuards(ApiAuthGuard)
   @Query((returns) => Ticket)
   async ticket(@Args() args: TicketIdArgs) {
     return await this.ticketService.findTicket(args);
@@ -72,7 +71,7 @@ export class TicketResolver {
     @CurrentUser() user: User,
     @Args('data') data: RateTicketInput,
   ) {
-    return await this.ticketService.rateTicket(user, data);
+    return await this.ticketService.rateTicket(data, user);
   }
 
   @UseGuards(ApiAuthGuard, RoleGuard)
@@ -110,5 +109,15 @@ export class TicketResolver {
   @ResolveField()
   async technician(@Parent() ticket: Ticket) {
     return await this.ticketService.getTechnicianFromTicket(ticket);
+  }
+
+  @ResolveField()
+  async trackURL(@Parent() ticket: Ticket) {
+    return `${process.env.URL}/ticket/${ticket.id}`;
+  }
+
+  @ResolveField()
+  async rateURL(@Parent() ticket: Ticket) {
+    return `${process.env.URL}/ticket/${ticket.id}`;
   }
 }
