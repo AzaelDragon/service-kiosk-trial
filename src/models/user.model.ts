@@ -5,6 +5,7 @@ import {
   HideField,
   ObjectType,
 } from '@nestjs/graphql';
+import { Exclude } from 'class-transformer';
 import { Ticket } from './ticket.model';
 
 export enum UserRole {
@@ -36,6 +37,7 @@ export class User {
   email: string;
 
   @HideField()
+  @Exclude()
   password: string;
 
   @Field()

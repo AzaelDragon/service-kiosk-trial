@@ -52,4 +52,10 @@ export class Ticket {
 
   @Field()
   type: TicketType;
+
+  @Field()
+  trackURL: string;
+
+  @Field()
+  rateURL: string;
 }
