@@ -4,13 +4,11 @@ import { IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class CreateTicketInput {
+  @Field((type) => Int)
+  @IsNotEmpty()
+  client: number;
 
-    @Field(type => Int)
-    @IsNotEmpty()
-    client: number
-    
-    @Field()
-    @IsNotEmpty()
-    type: TicketType
-
-}   
+  @Field()
+  @IsNotEmpty()
+  type: TicketType;
+}

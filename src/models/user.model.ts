@@ -1,42 +1,48 @@
-import { registerEnumType, Field, Int, HideField, ObjectType } from "@nestjs/graphql";
-import { Ticket } from "./ticket.model";
+import {
+  registerEnumType,
+  Field,
+  Int,
+  HideField,
+  ObjectType,
+} from '@nestjs/graphql';
+import { Ticket } from './ticket.model';
 
 export enum UserRole {
-    CLIENT = 'CLIENT',
-    TECHNICIAN = 'TECHNICIAN'
+  CLIENT = 'CLIENT',
+  TECHNICIAN = 'TECHNICIAN',
 }
 
 registerEnumType(UserRole, {
-    name: 'User Role',
-    description: 'Determines the kind of user and it\'s privileges.'
-})
+  name: 'User Role',
+  description: "Determines the kind of user and it's privileges.",
+});
 
 @ObjectType()
 export class User {
-    @Field(type => Int)
-    id: number;
+  @Field((type) => Int)
+  id: number;
 
-    @Field(type => Int)
-    document: number;
+  @Field((type) => Int)
+  document: number;
 
-    @Field()
-    firstName: string;
+  @Field()
+  firstName: string;
 
-    @Field()
-    lastName: string;
+  @Field()
+  lastName: string;
 
-    @Field()
-    email: string;
+  @Field()
+  email: string;
 
-    @HideField()
-    password: string;
+  @HideField()
+  password: string;
 
-    @Field()
-    role: UserRole;
+  @Field()
+  role: UserRole;
 
-    @Field(type => [Ticket], { nullable: true })
-    clientTickets: Ticket[];
+  @Field((type) => [Ticket], { nullable: true })
+  clientTickets: Ticket[];
 
-    @Field(type => [Ticket], { nullable: true })
-    technicianTickets: Ticket[];
+  @Field((type) => [Ticket], { nullable: true })
+  technicianTickets: Ticket[];
 }
