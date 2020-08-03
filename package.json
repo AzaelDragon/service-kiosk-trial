@@ -14,6 +14,8 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "prisma:save": "yarn run prisma migrate save --experimental",
     "prisma:up": "yarn run prisma migrate up --experimental",
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "prisma:setup": "yarn prisma:up && yarn prisma:generate && yarn prisma:seed",
     "prisma:studio": "yarn run prisma studio --experimental",
     "prisma:generate": "yarn run prisma generate",
     "prisma:generate:watch": "yarn run prisma generate --watch",
@@ -29,7 +31,8 @@
     "docker:build": "docker-compose build",
     "docker:up": "docker-compose -p service-kiosk up",
     "docker:up:bg": "docker-compose -p service-kiosk up -d",
-    "docker:up:build": "docker-compose up --build -V"
+    "docker:up:build": "docker-compose up --build -V",
+    "docker:seed": "docker exec -it service-kiosk yarn prisma:seed"
   },
   "dependencies": {
     "@nestjs/common": "^7.4.2",
