@@ -1,11 +1,11 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { CreateTicketInput } from 'src/models/inputs/create-ticket.input';
+import { CreateTicketInput } from '../models/inputs/create-ticket.input';
 import { TicketStatus, UserRole } from '@prisma/client';
-import { TicketIdArgs } from 'src/models/args/ticket-id.args';
-import { Ticket } from 'src/models/ticket.model';
-import { RateTicketInput } from 'src/models/inputs/rate-ticket.input';
-import { User } from 'src/models/user.model';
+import { TicketIdArgs } from '../models/args/ticket-id.args';
+import { Ticket } from '../models/ticket.model';
+import { RateTicketInput } from '../models/inputs/rate-ticket.input';
+import { User } from '../models/user.model';
 import { contains } from 'class-validator';
 import { start } from 'repl';
 import { NestApplication } from '@nestjs/core';

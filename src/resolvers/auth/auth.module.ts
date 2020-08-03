@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { AuthService } from 'src/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { AuthResolver } from './auth.resolver';
 import { JwtStrategy } from './jwt.strategy';
-import { ApiAuthGuard } from 'src/guards/api-auth.guard';
-import { RoleGuard } from 'src/guards/role.guard';
-import { PasswordService } from 'src/services/password.service';
-import { PrismaService } from 'src/services/prisma.service';
+import { ApiAuthGuard } from '../../guards/api-auth.guard';
+import { RoleGuard } from '../../guards/role.guard';
+import { PasswordService } from '../../services/password.service';
+import { PrismaService } from '../../services/prisma.service';
 
 @Module({
   imports: [
