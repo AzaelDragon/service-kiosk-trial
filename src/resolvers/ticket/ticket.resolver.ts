@@ -20,6 +20,7 @@ import { CurrentUser } from '../../decorators/current-user.decorator';
 import { User } from '../../models/user.model';
 import { RequestTicketInput } from '../../models/inputs/request-ticket.input';
 import { RateTicketInput } from '../../models/inputs/rate-ticket.input';
+import { UpdateTicketStatusInput } from 'src/models/inputs/update-ticket-status.input';
 
 @Resolver((of) => Ticket)
 export class TicketResolver {
@@ -42,9 +43,7 @@ export class TicketResolver {
   @Roles('ADMIN')
   @Query((returns) => [Ticket])
   async clientTickets(@Args() args: UserIdArgs) {
-    const test = await this.ticketService.findClientTickets(args.userId);
-    console.log(test);
-    return test;
+    return await this.ticketService.findClientTickets(args.userId);
   }
 
   @UseGuards(ApiAuthGuard, RoleGuard)
@@ -69,6 +68,16 @@ export class TicketResolver {
     @Args('data') data: RateTicketInput,
   ) {
     return await this.ticketService.rateTicket(data, user);
+  }
+
+  @UseGuards(ApiAuthGuard, RoleGuard)
+  @Roles('ADMIN', 'TECHNICIAN')
+  @Mutation((returns) => Ticket)
+  async updateTicketStatus(
+    @CurrentUser() user: User,
+    @Args('data') data: UpdateTicketStatusInput,
+  ) {
+    return await this.ticketService.changeTicketStatus(data, user);
   }
 
   @UseGuards(ApiAuthGuard, RoleGuard)

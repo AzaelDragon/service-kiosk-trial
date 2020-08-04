@@ -6,13 +6,38 @@ import { TicketIdArgs } from '../models/args/ticket-id.args';
 import { Ticket } from '../models/ticket.model';
 import { RateTicketInput } from '../models/inputs/rate-ticket.input';
 import { User } from '../models/user.model';
-import { contains } from 'class-validator';
-import { start } from 'repl';
-import { NestApplication } from '@nestjs/core';
+import { UpdateTicketStatusInput } from 'src/models/inputs/update-ticket-status.input';
 
 @Injectable()
 export class TicketService {
   constructor(private prisma: PrismaService) {}
+
+  async changeTicketStatus(payload: UpdateTicketStatusInput, user: User) {
+    if (user.role !== UserRole.ADMIN) {
+      const targetTicket = await this.prisma.ticket.findOne({
+        where: { id: payload.ticketId },
+      });
+      if (user.id != targetTicket.technicianId) {
+        throw new HttpException(
+          {
+            status: HttpStatus.FORBIDDEN,
+            error:
+              'You can only update the status of a ticket that is assigned to you.',
+          },
+          HttpStatus.FORBIDDEN,
+        );
+      }
+    }
+
+    return this.prisma.ticket.update({
+      data: {
+        status: payload.status,
+      },
+      where: {
+        id: payload.ticketId,
+      },
+    });
+  }
 
   async findAllTickets() {
     return this.prisma.ticket.findMany();
