@@ -20,6 +20,7 @@ import { UserService } from './services/user.service';
         playground:
           configService.get('PLAYGROUND_ENABLE') === '1' ? true : false,
         context: ({ req }) => ({ req }),
+        introspection: true
       }),
       inject: [ConfigService],
     }),
