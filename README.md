@@ -12,7 +12,7 @@ A simple service order ticketing API powered by NestJS and GraphQL. Built as a c
 - JWT authentication through [passport-jwt](https://github.com/mikenicholson/passport-jwt).
 - OpenAPI-compliant REST API for secondary actions documented with [Swagger](https://swagger.io).
 - Out of the box [Docker](https://www.docker.com) containerization.
-- Automatically deployed to [Heroku](https://service-kiosk-trial.herokuapp.com/).
+- Automatically deployed to [Heroku](https://service-kiosk-trial.herokuapp.com/graphql).
 
 ## Project Setup
 

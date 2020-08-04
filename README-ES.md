@@ -12,7 +12,7 @@ Una simple API para la administración de órdenes de servicio basada en NestJS 
 - Autenticación basada en JWT mediante [passport-jwt](https://github.com/mikenicholson/passport-jwt).
 - API Rest adherida al estándar OpenAPI para acciones secundarias documentada con [Swagger](https://swagger.io).
 - Distribución en contenedores mediada por [Docker](https://www.docker.com).
-- Despliegue automático a [Heroku](https://service-kiosk-trial.herokuapp.com/).
+- Despliegue automático a [Heroku](https://service-kiosk-trial.herokuapp.com/graphql).
 
 ## Inicialización del proyecto
 
